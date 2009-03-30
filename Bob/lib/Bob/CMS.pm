@@ -23,10 +23,6 @@ sub list_jobs {
     use Reblog::ReblogSourcefeed;
     my ($app) = @_;
 
-    # my $perms = $app->permissions;
-    # unless ( $perms && $perms->can_configure_aggregations ) {
-    #     return $app->error('You cannot configure aggregations.');
-    # }
     my $blog   = $app->blog;
     my $plugin = MT->component('Bob');
     my %blog_names;
