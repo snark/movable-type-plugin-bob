@@ -1,0 +1,146 @@
+<mt:if name="job_id">
+    <mt:setvarblock name="page_title"><__trans phrase="Edit [_1]" params="<$mt:var name="object_label"$>"></mt:setvarblock>
+<mt:else>
+	<mt:setvarblock name="page_title"><__trans phrase="New [_1]" params="<$mt:var name="object_label"$>"></mt:setvarblock>
+    <mt:setvar name="new_object" value="1">
+</mt:if>
+<$mt:setvar name="position_actions_bottom" value="1"$>
+
+<mt:if name="id">
+<mt:setvarblock name="object_nav">
+<ul class="object-nav">
+    <li><a href="<$mt:var name="script_url"$>?__mode=rebuilder_list"><__trans phrase="Manage [_1]" params="<$mt:var name="object_label_plural"$>"></a></li>
+</ul>
+</mt:setvarblock>
+</mt:if>
+
+<mt:setvarblock name="system_msg">
+<mt:if name="saved">
+    <mtapp:statusmsg
+        id="saved"
+        class="success">
+        <__trans phrase="Your changes have been saved.">
+    </mtapp:statusmsg>
+</mt:if>
+</mt:setvarblock>
+<mt:setvar name="screen_id" value="edit_job">
+<mt:setvar name="position_actions_bottom" value="1">
+<mt:setvarblock name="system_msg">
+    <mt:if name="saved">
+        <mtapp:statusmsg
+            id="saved"
+            class="success">
+            <__trans phrase="Your changes have been saved.">
+        </mtapp:statusmsg>
+    </mt:if>
+    <mt:if name="saved_deleted">
+        <mtapp:statusmsg
+            id="saved-deleted"
+            class="success">
+            <__trans phrase="The selected job has been deleted from the database.">
+        </mtapp:statusmsg>
+    </mt:if>
+    <mt:if name="error">
+        <mtapp:statusmsg
+            id="generic-error"
+            class="error">
+            <mt:var name="error">
+        </mtapp:statusmsg>
+    </mt:if>
+    <mtapp:statusmsg
+     id="blank-fields"
+     class="error hidden">
+        <__trans phrase="Please ensure all required fields (highlighted) have been filled in.">
+    </mtapp:statusmsg>
+</mt:setvarblock>
+<mt:setvarblock name="html_head">
+    <script type="text/javascript">
+    <!--
+        var customfield_types_loop = <mt:var name="customfield_types_loop" to_json="1">
+
+        function init() {
+        }
+
+        TC.attachLoadEvent(init);
+    //-->
+    </script>
+</mt:setvarblock>
+
+<mt:include name="include/header.tmpl">
+
+<form method="post" action="<mt:var name="script_url">" onsubmit="return checkRequired(this);">
+    <input type="hidden" name="__mode" value="rebuilder_save" />
+    <input type="hidden" name="_type" value="<mt:var name="object_type">" />
+    <input type="hidden" name="id" value="<mt:var name="id">" />
+    <input type="hidden" name="return_args" value="<mt:var name="return_args" escape="html">" />
+    <input type="hidden" name="magic_token" value="<mt:var name="magic_token">" />
+    <input type="hidden" name="order" value="<mt:var name="order">" />
+
+	<fieldset>
+		<mt:unless name="blog_name">
+	    <mtapp:setting
+	        id="job_blog_id"
+	        label="<__trans phrase="Blog">"
+	        required="1">
+	    	<select name="blog_id" id="job_blog_id">
+	        <mt:loop name="blogs_loop">
+	            <option value="<mt:var name="blog_id">"><mt:var name="blog_name" escape="html"></option>
+	        </mt:loop>
+			</select>
+	    </mtapp:setting>
+		<mt:else>
+	    <mtapp:setting
+	        id="job_blog_id"
+	        label="<__trans phrase="Blog">"
+	        required="1">
+			<span><mt:var name="blog_name" escape="html"></span>
+			<input type="hidden" name="blog_id" value="<mt:var name="blog_id">" />
+	    </mtapp:setting>
+	    </mt:unless>
+	</fieldset>
+
+	<fieldset>
+	    <mtapp:setting
+	        id="job_type"
+	        label="<__trans phrase="Rebuild Type">"
+	        required="1">
+	    	<select name="type" id="job_type">
+	        <mt:loop name="types_loop">
+	            <option value="<mt:var name="type_value">"<mt:if var="selected"> selected="selected"</mt:if>><mt:var name="type_name" escape="html"></option>
+	        </mt:loop>
+			</select>
+	    </mtapp:setting>
+	</fieldset>
+
+	<fieldset>
+	    <mtapp:setting
+	        id="job_frequency"
+	        label="<__trans phrase="Frequency">"
+	        required="1">
+	    	<select name="frequency" id="job_frequency">
+	        <mt:loop name="frequencies_loop">
+	            <option value="<mt:var name="frequency_value">"<mt:if var="selected"> selected="selected"</mt:if>><mt:var name="frequency_name" escape="html"></option>
+	        </mt:loop>
+			</select>
+	    </mtapp:setting>
+	</fieldset>
+
+	<fieldset>
+		<mtapp:setting
+		    id="is_active"
+		    label="<__trans phrase="Active">">
+		        <input type="checkbox" name="is_active" id="is_active" value="1" <mt:if name="is_active">checked="checked"</mt:if>/>
+		</mtapp:setting>
+	</fieldset>
+
+<mt:setvartemplate name="action_buttons">
+    <button
+        type="submit"
+        accesskey="s"
+        title="<__trans phrase="Save changes to this [_1] (s)" params="<mt:var name="object_label" lower_case="1">">"
+        class="primary-button"
+        ><__trans phrase="Save Changes"></button>
+</mt:setvartemplate>
+<mt:include name="include/actions_bar.tmpl" bar_position="bottom" hide_pager="1" settings_bar="1">
+</form>
+<mt:include name="include/footer.tmpl">

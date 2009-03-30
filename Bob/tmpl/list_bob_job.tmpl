@@ -1,0 +1,46 @@
+<mt:setvarblock name="page_title"><__trans phrase="Manage Rebuilder Jobs"></mt:setvarblock>
+
+<mt:setvarblock name="action_buttons">
+                <a href="javascript:void(0)"
+                    onclick="doRemoveItems(getByID('<$mt:var name="object_type"$>-listing-form'), '<mt:var name="object_label" lower_case="1" escape="js">', '<mt:var name="object_label_plural" lower_case="1" escape="js">'); return false;"
+                    accesskey="x"
+                    title="<__trans phrase="Delete selected [_1] (x)" params="<mt:var name="object_label_plural">">"
+                    ><__trans phrase="Delete"></a>
+</mt:setvarblock>
+
+<mt:setvarblock name="html_head" append="1">
+<script></script>
+</mt:setvarblock>
+
+<mt:setvarblock name="content_header">
+<p id="create-new-link"><a href="<$mt:var name="mt_url"$>?__mode=rebuilder_edit&amp;_type=<mt:var name="object_type">" class="icon-left icon-create"><__trans phrase="Create [_1]" params="<mt:var name="object_label" lower_case="1">"></a></p>
+</mt:setvarblock>
+<mt:include name="include/header.tmpl" id="header_include">
+<mtapp:listing>
+    <mt:if __first__>
+        <thead>
+            <tr>
+                <th id="jt-id" class="cb"><input type="checkbox" name="id-head" value="all" class="select" /></th>
+		        <th id="jt-name"><__trans phrase="Blog Name"></th>
+		        <th id="jt-type"><__trans phrase="Rebuild Object"></th>
+		        <th id="jt-frequency"><__trans phrase="Frequency"></th>
+		        <th id="jt-last-rebuild"><__trans phrase="Last Rebuild"></th>
+		        <th id="jt-settings"><__trans phrase="Active"></th>
+            </tr>
+        </thead>
+        <tbody>
+    </mt:if>
+    <tr class="<mt:if name="__odd__">odd<mt:else>even</mt:if><mt:if name="has_error"> haserror</mt:if>" id="<mt:var name="id">_row">
+        <td class="cb"><input type="checkbox" name="id" value="<mt:var name="id">" class="select" /></td>
+        <td><mt:var name="blog_name" escape="html"></td>
+        <td align="right"><a href="?__mode=rebuilder_edit&id=<mt:var name="id">"><mt:var name="type_display" escape="html"></a></td>
+        <td align="right"><mt:var name="frequency_display" escape="html"></td>
+        <td align="right"><mt:var name="formatted_last_run" escape="html"></td>
+        <td align="right"><mt:var name="is_active" escape="html"></td>
+    </tr>
+    <mt:if __last__>
+        </tbody>
+    </mt:if>
+</mtapp:listing>
+
+<mt:include name="include/footer.tmpl">
