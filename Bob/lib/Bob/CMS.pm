@@ -20,7 +20,6 @@ use MT::Blog;
 use MT::Util;
 
 sub list_jobs {
-    use Reblog::ReblogSourcefeed;
     my ($app) = @_;
 
     my $blog   = $app->blog;
