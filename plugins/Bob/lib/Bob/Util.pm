@@ -81,7 +81,7 @@ sub constant_to_hashref {
     }
     foreach my $hashref (@$data) {
         my ( $k, $v ) = each %$hashref;
-        $hash{$k} = $v;
+        $hash{$k} = $v if $v;
     }
     return \%hash;
 }

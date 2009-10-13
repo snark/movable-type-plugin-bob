@@ -1,7 +1,7 @@
 name: Bob the Rebuilder
 id: Bob
 key: Bob
-version: 0.9rc2
+version: 0.9rc3
 schema_version: 0.1
 description: Rebuild selected pages automatically
 object_types:
